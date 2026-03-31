@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Digital Maturity Index Kazakhstan 2026</title>
+<!-- jsPDF + html2canvas for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- Google reCAPTCHA v2 -->
+<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --doodocs: #22c55e;
+    --doodocs-dark: #16a34a;
+    --doodocs-light: #dcfce7;
+    --doodocs-hover: #15803d;
+    --ppl: #0f2b46;
+    --ppl-mid: #1e3a5f;
+    --ppl-light: #2a4a72;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-secondary: #4b5563;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --border-light: #f3f4f6;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --orange: #f97316;
+    --blue: #3b82f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background: var(--ppl);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-logos {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .nav-logo {
+    font-weight: 800;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo.doodocs { color: var(--doodocs); }
+
+  .nav-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .lang-switcher {
+    display: flex;
+    gap: 6px;
+  }
+
+  .lang-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6);
+    transition: all 0.2s;
+  }
+
+  .lang-btn.active {
+    background: var(--doodocs);
+    color: white;
+  }
+
+  .lang-btn:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .lang-btn.active:hover {
+    background: var(--doodocs-dark);
+  }
+
+  .nav-research {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+  }
+
+  .hero {
+    background: linear-gradient(160deg, var(--ppl) 0%, var(--ppl-mid) 50%, #1a4a3a 100%);
+    color: white;
+    padding: 80px 20px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(34,197,94,0.12);
+    color: var(--doodocs);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 28px;
+    letter-spacing: 0.3px;
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 780px;
+    margin: 0 auto 18px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, var(--doodocs), #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 18px;
+    opacity: 0.75;
+    max-width: 560px;
+    margin: 0 auto 36px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    background: var(--doodocs);
+    color: white;
+    padding: 16px 44px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    letter-spacing: -0.2px;
+  }
+
+  .hero-cta:hover {
+    background: var(--doodocs-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(34,197,94,0.3);
+  }
+
+  .hero-partners {
+    margin-top: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    font-size: 14px;
+    opacity: 0.55;
+    font-weight: 500;
+  }
+
+  .hero-partners .partner-sep {
+    font-size: 18px;
+    opacity: 0.4;
+  }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 56px;
+    padding: 28px 20px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-item .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--ppl-mid);
+    letter-spacing: -0.5px;
+  }
+
+  .stat-item .label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .levels-section {
+    padding: 64px 20px;
+    text-align: center;
+    background: white;
+  }
+
+  .levels-section h2 {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .levels-section .subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto 44px;
+  }
+
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .level-card {
+    background: var(--card);
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: default;
+  }
+
+  .level-card:hover {
+    border-color: var(--border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .level-num {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--doodocs);
+    margin-bottom: 12px;
+  }
+
+  .level-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .level-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .profile-step, .quiz-container, .results-container {
+    display: none;
+  }
+
+  .profile-step.active, .quiz-container.active, .results-container.active {
+    display: block;
+  }
+
+  .profile-step {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 64px 20px;
+  }
+
+  .profile-step h2 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    text-align: center;
+    letter-spacing: -0.5px;
+  }
+
+  .profile-step .subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+  }
+
+  .form-group {
+    margin-bottom: 28px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+
+  .form-group .required {
+    color: var(--red);
+  }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: var(--doodocs);
+    background: rgba(34,197,94,0.02);
+  }
+
+  .form-group input.field-error,
+  .form-group select.field-error {
+    border-color: var(--red);
+  }
+
+  .form-error-msg {
+    display: none;
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 6px;
+  }
+
+  .recaptcha-container {
+    margin: 28px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .recaptcha-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+    text-align: center;
+    display: block;
+  }
+
+  .recaptcha-error {
+    display: none;
+    font-size: 13px;
+    color: var(--red);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 80vh;
+  }
+
+  .progress-bar-wrap {
+    height: 4px;
+    background: var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--doodocs);
+    width: 0%;
+    transition: width 0.3s;
+  }
+
+  .progress-text {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+
+  .quiz-section-label {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 0.2px;
+  }
+
+  .quiz-question {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
+
+  .quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .quiz-option {
+    padding: 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--card);
+  }
+
+  .quiz-option:hover {
+    border-color: var(--doodocs);
+    background: rgba(34,197,94,0.02);
+  }
+
+  .quiz-option.selected {
+    border-color: var(--doodocs);
+    background: rgba(34,197,94,0.08);
+    font-weight: 600;
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 48px;
+  }
+
+  .btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: -0.1px;
+  }
+
+  .btn-primary {
+    background: var(--doodocs);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--doodocs-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:disabled {
+    background: var(--muted);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    background: var(--border-light);
+    color: var(--text);
+  }
+
+  .btn-secondary:hover {
+    background: var(--border);
+  }
+
+  .btn-secondary:disabled {
+    background: var(--border-light);
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+
+  .results-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 20px;
+    min-height: 100vh;
+  }
+
+  .result-hero {
+    text-align: center;
+    padding: 48px 32px;
+    background: var(--card);
+    border-radius: 16px;
+    margin-bottom: 40px;
+    border: 1px solid var(--border);
+  }
+
+  .result-score-ring {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+
+  .result-score-ring svg {
+    transform: rotate(-90deg);
+  }
+
+  .score-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: -1px;
+  }
+
+  .score-pct {
+    font-size: 24px;
+    color: var(--muted);
+  }
+
+  .result-level-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .result-hero p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .vectors-grid {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .vector-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .vector-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .vector-score {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .vector-bar {
+    height: 8px;
+    background: var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .vector-bar-fill {
+    height: 100%;
+    transition: width 0.3s;
+  }
+
+  .recommendations {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 40px;
+  }
+
+  .recommendations h2 {
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 28px;
+    letter-spacing: -0.3px;
+  }
+
+  .rec-item {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .rec-item:last-child { margin-bottom: 0; }
+
+  .rec-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .rec-item h4 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: -0.1px;
+  }
+
+  .rec-item p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .result-actions .btn {
+    padding: 14px 32px;
+    font-size: 15px;
+  }
+
+  .result-cta {
+    text-align: center;
+    padding: 48px 40px;
+    background: linear-gradient(160deg, var(--ppl) 0%, var(--ppl-mid) 50%, #1a4a3a 100%);
+    border-radius: 20px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .result-cta::before {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .result-cta h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -0.3px;
+    position: relative;
+  }
+
+  .result-cta p {
+    opacity: 0.75;
+    margin-bottom: 28px;
+    position: relative;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .result-cta .btn-primary {
+    padding: 16px 44px;
+    font-size: 17px;
+    position: relative;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 32px 20px;
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    background: white;
+  }
+
+  .footer a {
+    color: var(--ppl-mid);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer a:hover { text-decoration: underline; }
+
+  .footer-links {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ppl);
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.3s;
+    max-width: 360px;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: var(--red); }
+  .toast.success { background: var(--doodocs-dark); }
+
+  @media (max-width: 768px) {
+    .levels-grid { grid-template-columns: repeat(2, 1fr); }
+    .levels-grid .level-card:last-child { grid-column: span 2; }
+    .vectors-grid { grid-template-columns: 1fr; }
+    .stats-bar { gap: 24px; }
+    .nav { padding: 12px 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 60px 16px 44px; }
+    .hero h1 { font-size: 28px; }
+    .levels-grid { grid-template-columns: 1fr; }
+    .levels-grid .level-card:last-child { grid-column: span 1; }
+    .nav-research { display: none; }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<nav class="nav" id="navBar">
+  <div class="nav-logos">
+    <a class="nav-logo" href="https://pplconsulting.kz" target="_blank">People Consulting</a>
+    <div class="nav-divider"></div>
+    <a class="nav-logo doodocs" href="https://doodocs.kz" target="_blank">Doodocs</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-research" id="navResearch">HR Maturity Index 2026</span>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="switchLang('ru')">РУ</button>
+      <button class="lang-btn" onclick="switchLang('kz')">КЗ</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <div class="hero-badge" id="heroBadge">Первое исследование в Казахстане</div>
+  <h1><em>От бумаги к AI:</em> Индекс цифровой зрелости</h1>
+  <p id="heroSubtitle">Узнайте реальный уровень цифровизации HR в вашей компании за 5 минут. Получите персональный отчёт с рекомендациями.</p>
+  <button class="hero-cta" onclick="startQuiz()" id="heroCTA">Пройти оценку</button>
+  <div class="hero-partners">
+    <span id="partner1">People Consulting</span>
+    <span class="partner-sep">×</span>
+    <span id="partner2">Doodocs HR</span>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-item">
+    <div class="num">18</div>
+    <div class="label" id="stat1">вопросов</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">5</div>
+    <div class="label" id="stat2">на прохождение</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">5</div>
+    <div class="label" id="stat3">уровней зрелости</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">4</div>
+    <div class="label" id="stat4">вектора оценки</div>
+  </div>
+</div>
+
+<!-- LEVELS SECTION -->
+<section class="levels-section" id="levelsSection">
+  <h2 id="levelsH2">5 уровней цифровой зрелости HR</h2>
+  <p class="subtitle" id="levelsSubtitle">На каком этапе находится ваша компания?</p>
+  <div class="levels-grid">
+    <div class="level-card">
+      <div class="level-num">1</div>
+      <h3 id="level1Title">Ручной формат</h3>
+      <p id="level1Desc">Полностью на бумаге, автоматизация отсутствует</p>
+    </div>
+    <div class="level-card">
+      <div class="level-num">2</div>
+      <h3 id="level2Title">Цифровой пэчворк</h3>
+      <p id="level2Desc">Базовые инструменты, не связаны между собой</p>
+    </div>
+    <div class="level-card">
+      <div class="level-num">3</div>
+      <h3 id="level3Title">Изолированные системы</h3>
+      <p id="level3Desc">Отдельные решения без интеграций</p>
+    </div>
+    <div class="level-card">
+      <div class="level-num">4</div>
+      <h3 id="level4Title">Полностью цифровой</h3>
+      <p id="level4Desc">Сквозная автоматизация и интеграции</p>
+    </div>
+    <div class="level-card">
+      <div class="level-num">5</div>
+      <h3 id="level5Title">Advanced Automation & AI-ready</h3>
+      <p id="level5Desc">Полная автоматизация + AI-аналитика + предиктивный HR</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile-step active" id="profileStep">
+  <h2 id="profileH2">О вашей компании</h2>
+  <p class="subtitle" id="profileSubtitle">Эта информация нужна для сравнения с компаниями вашего сегмента</p>
+  <div class="form-group">
+    <label id="industryLabel">Отрасль <span class="required">*</span></label>
+    <select id="industry" required>
+      <option value="">-- выберите --</option>
+    </select>
+    <div class="form-error-msg" id="industryError">Выберите отрасль</div>
+  </div>
+  <div class="form-group">
+    <label id="companySizeLabel">Количество сотрудников <span class="required">*</span></label>
+    <select id="companySize" required>
+      <option value="">-- выберите --</option>
+      <option>До 200</option>
+      <option>200–500</option>
+      <option>500–1 000</option>
+      <option>1 000–3 000</option>
+      <option>3 000+</option>
+    </select>
+    <div class="form-error-msg" id="companySizeError">Выберите размер компании</div>
+  </div>
+  <div class="form-group">
+    <label id="roleLabel">Ваша роль <span class="required">*</span></label>
+    <select id="role" required>
+      <option value="">-- выберите --</option>
+    </select>
+    <div class="form-error-msg" id="roleError">Выберите вашу роль</div>
+  </div>
+  <div class="form-group">
+    <label id="docLangLabel">Язык делопроизводства <span class="required">*</span></label>
+    <select id="docLang" required>
+      <option value="">-- выберите --</option>
+      <option>Русский</option>
+      <option>Казахский</option>
+      <option>Двуязычное (русский + казахский)</option>
+      <option>Английский</option>
+      <option>Другое</option>
+    </select>
+    <div class="form-error-msg" id="docLangError">Выберите язык делопроизводства</div>
+  </div>
+  <div class="form-group">
+    <label id="emailLabel">Email (для получения полного отчёта) <span class="required">*</span></label>
+    <input type="email" id="userEmail" placeholder="you@company.kz" required>
+    <div class="form-error-msg" id="emailError">Введите корректный email</div>
+  </div>
+  <!-- CAPTCHA temporarily disabled for testing -->
+  <div class="recaptcha-container" style="display:none">
+    <div>
+      <label class="recaptcha-label" id="recaptchaLabel">Подтвердите, что вы не робот</label>
+      <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+      <div class="recaptcha-error" id="recaptchaError">Пожалуйста, завершите проверку reCAPTCHA</div>
+    </div>
+  </div>
+  <div class="quiz-nav">
+    <div></div>
+    <button class="btn btn-primary" onclick="startQuestions()" id="startQuizBtn">Начать оценку →</button>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section class="quiz-container" id="quizContainer">
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar"></div>
+  </div>
+  <div class="progress-text" id="progressText"></div>
+  <div id="questionArea"></div>
+  <div class="quiz-nav">
+    <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">← Назад</button>
+    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Далее →</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results-container" id="resultsContainer">
+  <div id="pdfContent">
+    <div class="result-hero fade-in" id="resultHero"></div>
+    <div class="vectors-grid fade-in" id="vectorsGrid"></div>
+    <div class="recommendations fade-in" id="recommendations"></div>
+  </div>
+  <div class="result-actions fade-in">
+    <button class="btn btn-primary" onclick="downloadPDF()" id="downloadPDFBtn">Скачать PDF-отчёт</button>
+  </div>
+  <div class="result-cta fade-in">
+    <h2 id="ctaH2">Хотите узнать, как перейти на следующий уровень?</h2>
+    <p id="ctaP">Получите полный аналитический отчёт «State of HR Tech Kazakhstan 2026» с бенчмарками по вашей отрасли</p>
+    <button class="btn btn-primary" id="ctaBtn">Получить полный отчёт</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer">
+  <p id="footerText">Совместное исследование People Consulting и Doodocs HR</p>
+  <div class="footer-links">
+    <a href="https://pplconsulting.kz" target="_blank">People Consulting</a>
+    <a href="https://doodocs.kz" target="_blank">Doodocs HR</a>
+  </div>
+</footer>
+
+<script>
+/* ===== INTERNATIONALIZATION ===== */
+const LANG = {
+  ru: {
+    navResearch: "HR Maturity Index 2026",
+    heroBadge: "Первое исследование в Казахстане",
+    heroH1_1: "От бумаги к AI:",
+    heroH1_2: "Индекс цифровой зрелости",
+    heroSubtitle: "Узнайте реальный уровень цифровизации HR в вашей компании за 5 минут. Получите персональный отчёт с рекомендациями.",
+    heroCTA: "Пройти оценку",
+    partner1: "People Consulting",
+    partner2: "Doodocs HR",
+    stat1: "вопросов",
+    stat2: "на прохождение",
+    stat3: "уровней зрелости",
+    stat4: "вектора оценки",
+    levelsH2: "5 уровней цифровой зрелости HR",
+    levelsSubtitle: "На каком этапе находится ваша компания?",
+    level1: { title: "Ручной формат", desc: "Полностью на бумаге, автоматизация отсутствует" },
+    level2: { title: "Цифровой пэчворк", desc: "Базовые инструменты, не связаны между собой" },
+    level3: { title: "Изолированные системы", desc: "Отдельные решения без интеграций" },
+    level4: { title: "Полностью цифровой", desc: "Сквозная автоматизация и интеграции" },
+    level5: { title: "Advanced Automation & AI-ready", desc: "Полная автоматизация + AI-аналитика + предиктивный HR" },
+    profileH2: "О вашей компании",
+    profileSubtitle: "Эта информация нужна для сравнения с компаниями вашего сегмента",
+    industryLabel: "Отрасль",
+    companySizeLabel: "Количество сотрудников",
+    roleLabel: "Ваша роль",
+    docLangLabel: "Язык делопроизводства",
+    docLangError: "Выберите язык делопроизводства",
+    docLangOptions: ["Русский", "Казахский", "Двуязычное (русский + казахский)", "Английский", "Другое"],
+    emailLabel: "Email (для получения полного отчёта)",
+    recaptchaLabel: "Подтвердите, что вы не робот",
+    recaptchaError: "Пожалуйста, завершите проверку reCAPTCHA",
+    startQuizBtn: "Начать оценку →",
+    prevBtn: "← Назад",
+    nextBtn: "Далее →",
+    nextBtnFinal: "Показать результат",
+    downloadPDFBtn: "Скачать PDF-отчёт",
+    ctaH2: "Хотите узнать, как перейти на следующий уровень?",
+    ctaP: "Получите полный аналитический отчёт «State of HR Tech Kazakhstan 2026» с бенчмарками по вашей отрасли",
+    ctaBtn: "Получить полный отчёт",
+    footerText: "Совместное исследование People Consulting и Doodocs HR",
+    industries: [
+      "Банки и финансы",
+      "IT / Телеком",
+      "Нефть и газ / Горнодобыча",
+      "Ритейл / FMCG",
+      "Производство",
+      "Строительство",
+      "Логистика / Транспорт",
+      "Госсектор / Квазигос",
+      "Образование",
+      "Медицина / Фарма",
+      "Другое"
+    ],
+    roles: [
+      "CEO / COO / собственник",
+      "HR-директор / CHRO",
+      "HR Business Partner",
+      "HR-менеджер / специалист",
+      "CFO / Финансовый директор",
+      "IT-директор / CTO",
+      "Другое"
+    ],
+    blockNames: ["HR Admin & Compliance", "Инструменты и Архитектура", "Talent Experience", "Аналитика и Данные"],
+    questions: [
+      {section:"HR Admin & Compliance",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Как оформляются основные кадровые документы (трудовые договоры, приказы, допсоглашения)?",options:["Полностью на бумаге с ручными подписями","Создаются в 1С/Excel, но печатаются для подписи","Часть электронно (с ЭЦП), часть на бумаге — зависит от типа документа","Полностью электронно с ЭЦП/КЭДО, бумага только для исключений","Электронно с автоматическим формированием из данных, шаблоны обновляются централизованно, данные готовы для AI-аналитики"],block:0},
+      {section:"HR Admin & Compliance",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Вспомните последнего оформленного сотрудника. Сколько календарных дней прошло от решения о найме до его первого рабочего дня с полным доступом?",options:["Более 2 недель","1–2 недели","3–5 рабочих дней","1–2 рабочих дня","В тот же день или на следующий — процесс полностью автоматизирован с предиктивным планированием ресурсов"],block:0},
+      {section:"HR Admin & Compliance",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Как сотрудники подают заявление на отпуск и как оно согласовывается?",options:["Бумажное заявление → ручное согласование → бумажный приказ","Заявка по email/чату → ручная проверка баланса → документ в 1С","Электронная заявка в системе, но приказ формируется отдельно в другой системе","Единая система: заявка → автопроверка баланса → электронное согласование → приказ","Self-service с автоматической проверкой политик, уведомлениями руководителю, обновлением графика и AI-рекомендациями по балансировке нагрузки"],block:0},
+      {section:"HR Admin & Compliance",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Как контролируется соответствие кадровых документов трудовому законодательству РК?",options:["Полагаемся на опыт кадровика, специального контроля нет","Ручные чек-листы и периодические аудиты (раз в квартал/год)","Шаблоны в системе, но обновления при изменении НПА вносятся вручную","Шаблоны с контролем версий, audit trail и автоуведомлениями об изменениях в НПА","Централизованное управление шаблонами с отслеживанием применения по всем подразделениям и автоматическим обновлением при изменениях в НПА"],block:0},
+      {section:"HR Admin & Compliance",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Как рассчитывается заработная плата, налоги (ИПН, СН) и отчисления (ОПВ, ВОСМС, СО)?",options:["Вручную в Excel — формулы составлены кадровиком/бухгалтером","В 1С ЗУП, но много ручных корректировок каждый месяц","Автоматический расчёт в системе, но проверка и корректировки — вручную","Полностью автоматический расчёт с минимальными ручными вмешательствами","Автоматический расчёт + автоформирование отчётности + интеграция с банком для выплат + прогнозирование ФОТ на основе данных"],block:0},
+      {section:"Инструменты и Архитектура",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Какой основной набор инструментов использует ваш HR-отдел ежедневно?",options:["Только бумага, Excel и мессенджеры","1С ЗУП + Excel + мессенджеры — без связи между собой","3+ отдельных системы (1С, HRM, рекрутинг, LMS и др.) — данные переносятся вручную","Несколько систем с настроенными интеграциями и автоматическим потоком данных","Единая платформа или полностью интегрированная экосистема с API-связями, данные структурированы и готовы к AI-инструментам"],block:1},
+      {section:"Инструменты и Архитектура",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Интегрированы ли ваши HR-системы с государственными сервисами (Enbek, eGov, налоговая)?",options:["Нет — всё делается вручную на порталах","Частично — данные выгружаются из системы, но подаются на портале вручную","Выгрузки автоматизированы в нужных форматах, подача через портал вручную","Прямая интеграция с основными государственными сервисами","Полная интеграция с автоматической подачей и мониторингом статусов"],block:1},
+      {section:"Инструменты и Архитектура",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Как защищены персональные данные сотрудников в ваших HR-системах?",options:["Данные хранятся в общих Excel-файлах / папках без разграничения доступа","Есть пароли на файлы/папки, но нет централизованного управления доступом","Ролевой доступ в основной системе, но часть данных в незащищённых файлах","Централизованное управление доступом, логирование, данные хранятся в КЗ","Полный комплаенс: шифрование, audit trail, регулярные аудиты, соответствие ЗРК о персональных данных, инфраструктура готова к безопасному использованию AI"],block:1},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Есть ли у сотрудников единый цифровой канал для HR-сервисов (портал, приложение)?",options:["Нет — все вопросы решаются через HR-отдел лично или по телефону","Информация доступна фрагментарно (email, чат, общие папки)","Есть корпоративный портал, но HR-функции ограничены (только новости/документы)","Единый портал с self-service: справки, отпуска, данные о зарплате","Мобильное приложение с полным self-service, уведомлениями, обратной связью и AI-ассистентом для сотрудников"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Как проходит онбординг нового сотрудника (доступы, техника, документы, обучение)?",options:["Хаотично — каждый раз по-разному, много забывается","Есть чек-лист на бумаге/в Excel, но всё делается вручную разными отделами","Частично автоматизирован (например, только доступы ИЛИ только обучение), остальное вручную","Автоматический workflow: доступы + техника + обучение запускаются по триггеру найма","Полный workflow с трекингом прогресса, обратной связью от нового сотрудника, метриками time-to-productivity и персонализированным планом адаптации на основе данных"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Вспомните последнее увольнение сотрудника. Сколько времени заняло полное оформление (обходной лист, возврат техники, закрытие доступов, финальный расчёт)?",options:["Больше недели — процесс хаотичный, часто что-то забывается","3–5 рабочих дней — всё вручную, но есть чек-лист","1–3 дня — часть процесса автоматизирована","В течение дня — единый workflow с автоматическим закрытием доступов и расчётом","Несколько часов — полностью автоматизированный offboarding с моментальным отзывом доступов и аналитикой причин увольнений"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Как организован процесс подбора персонала (рекрутинг)?",options:["Вакансии ведутся в Excel / мессенджерах / email — единой системы нет","Есть площадки (hh.kz, Enbek), но кандидаты трекаются вручную (Excel, чат)","Используется ATS или CRM для рекрутинга, но не интегрирована с остальными HR-системами","ATS интегрирована с HR-системой: данные кандидата автоматически переносятся при найме","Полный цикл в единой системе: от заявки на вакансию до выхода сотрудника, с аналитикой воронки, time-to-hire и предиктивной оценкой кандидатов"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Как организовано обучение и развитие сотрудников (L&D)?",options:["Обучение не систематизировано — проводится стихийно, по запросу","Есть план обучения, но всё организуется вручную (Excel, email, внешние провайдеры)","Используется LMS или платформа обучения, но она не связана с другими HR-процессами","LMS интегрирована с HR-системой: обучение привязано к должностям, грейдам и результатам оценки","Персонализированные траектории развития с AI-рекомендациями, трекингом прогресса и предиктивной аналитикой эффективности обучения"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Могут ли сотрудники подавать заявления и взаимодействовать с HR-системой на разных языках (казахский, русский)?",options:["Нет — всё только на одном языке, без возможности выбора","Шаблоны заявлений есть на 2 языках, но заполняются и обрабатываются вручную","Система поддерживает ввод на 2 языках, но интерфейс и уведомления — только на одном","Интерфейс, шаблоны и уведомления доступны на 2+ языках, сотрудник выбирает язык","Полная мультиязычность: документы, интерфейс, уведомления и аналитика автоматически формируются на выбранном языке сотрудника"],block:2},
+      {section:"Аналитика и Данные",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Вспомните последний запрос руководства на HR-отчёт (текучесть, headcount, ФОТ). За какое время вы его подготовили?",options:["Несколько дней — собирали вручную из разных источников","1–2 дня — есть шаблоны в Excel, но данные обновляются вручную","Несколько часов — выгрузка из системы + ручная доработка","Минуты — дашборд с актуальными данными, нужно только отфильтровать","Отчёт не нужен — руководство видит данные в реальном времени через дашборд с AI-инсайтами и аномалиями"],block:3},
+      {section:"Аналитика и Данные",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Есть ли в вашей компании «единый источник правды» по данным о сотрудниках?",options:["Нет — данные в разных местах (1С, Excel, бумага), часто расходятся","Формально 1С, но актуальность данных не гарантирована","Есть основная система, но для полной картины нужно заглядывать в 1–2 другие","Единая система — все данные актуальны и доступны с ролевым разграничением","Единая система с автоматической синхронизацией из всех источников, контролем качества данных — данные AI-ready"],block:3},
+      {section:"Аналитика и Данные",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Используются ли HR-данные для принятия стратегических решений руководством?",options:["Нет — HR предоставляет данные только по запросу и с задержкой","Иногда — ежеквартальные отчёты для руководства в PowerPoint/Excel","Регулярно — HR-метрики входят в управленческую отчётность","Системно — HR-дашборд доступен руководству, метрики обсуждаются на управкомах","Проактивно — HR выносит рекомендации на основе данных и AI-моделей, руководство использует предиктивную HR-аналитику при планировании"],block:3}
+    ],
+    leadQuestion: {
+      question: "Как скоро вы планируете внедрять HR-автоматизацию?",
+      options: [
+        "Да, активно выбираем решение",
+        "Да, планируем, но пока на стадии изучения",
+        "Возможно, если найдём подходящее решение",
+        "Нет, текущие системы устраивают",
+        "Затрудняюсь ответить"
+      ]
+    },
+    progressText: "Вопрос {current} из {total}",
+    questionPart: "Вопрос",
+    from: "из",
+    lastQuestionLabel: "Последний вопрос",
+    recs: "Рекомендации для перехода на следующий уровень"
+  },
+  kz: {
+    navResearch: "HR Зрелік Индексі 2026",
+    heroBadge: "Қазақстандағы алғашқы зерттеу",
+    heroH1_1: "Қағаздан AI-ға:",
+    heroH1_2: "HR цифрлық жетілу индексі",
+    heroSubtitle: "Компанияңыздағы HR цифрландыру деңгейін 5 минутта біліңіз. Ұсыныстармен жеке есеп алыңыз.",
+    heroCTA: "Бағалауды бастау",
+    partner1: "People Consulting",
+    partner2: "Doodocs HR",
+    stat1: "сұрақ",
+    stat2: "өту уақыты",
+    stat3: "жетілу деңгейі",
+    stat4: "бағалау векторы",
+    levelsH2: "HR цифрлық жетілудің 5 деңгейі",
+    levelsSubtitle: "Сіздің компания қай кезеңде?",
+    level1: { title: "Қолмен басқару", desc: "Толығына қағазда, автоматтандыру жоқ" },
+    level2: { title: "Цифрлық пэчворк", desc: "Негіздік құралдар, бір-біріне байланыспайды" },
+    level3: { title: "Оқшауланған жүйелер", desc: "Бөлек шешімдер интеграциясыз" },
+    level4: { title: "Толық цифрлық", desc: "Сызбалық автоматтандыру және интеграциялар" },
+    level5: { title: "Озық автоматтандыру", desc: "Толық автоматтандыру + real-time аналитика" },
+    profileH2: "Сіздің компания туралы",
+    profileSubtitle: "Бұл мәлімет сіздің сегментіңіздегі компанияларымен салыстыру үшін қажет",
+    industryLabel: "Сала",
+    companySizeLabel: "Қызметкерлер саны",
+    roleLabel: "Сіздің рөліңіз",
+    docLangLabel: "Іс жүргізу тілі",
+    docLangError: "Іс жүргізу тілін таңдаңыз",
+    docLangOptions: ["Орысша", "Қазақша", "Екі тілде (орыс + қазақ)", "Ағылшынша", "Басқа"],
+    emailLabel: "Email (толық есеп алу үшін)",
+    recaptchaLabel: "Робот емес екеніңізді растаңыз",
+    recaptchaError: "Өтінегі, reCAPTCHA тіркелуін аяқтаңыз",
+    startQuizBtn: "Бағалауды бастау →",
+    prevBtn: "← Артқа",
+    nextBtn: "Келесі →",
+    nextBtnFinal: "Нәтижені көрсету",
+    downloadPDFBtn: "PDF есепті жүктеу",
+    ctaH2: "Келесі деңгейге қалай өтуді білгіңіз келе ме?",
+    ctaP: "«State of HR Tech Kazakhstan 2026» толық аналитикалық есебін өндіріс бойынша салыстырмалар арқылы алыңыз",
+    ctaBtn: "Толық есепті алу",
+    footerText: "People Consulting және Doodocs HR бірлескен зерттеуі",
+    industries: [
+      "Банктер мен қаржы",
+      "IT / Телеком",
+      "Мұнай-газ / Тау-кен",
+      "Ритейл / FMCG",
+      "Өндіріс",
+      "Құрылыс",
+      "Логистика / Көлік",
+      "Мемлекеттік сектор / Квазимем",
+      "Білім беру",
+      "Медицина / Фарма",
+      "Басқа"
+    ],
+    roles: [
+      "CEO / COO / меншік иесі",
+      "HR-директор / CHRO",
+      "HR Business Partner",
+      "HR-менеджер / маман",
+      "CFO / Қаржы директоры",
+      "IT-директор / CTO",
+      "Басқа"
+    ],
+    blockNames: ["HR Әкімшілік & Сәйкестік", "Құралдар мен Сәулет", "Talent Experience", "Аналитика мен Деректер"],
+    questions: [
+      {section:"HR Әкімшілік & Сәйкестік",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Негіздік кадрлық құжаттарға (еңбек шарттары, бұйрықтары, қосымша келісімдері) қалай өтінік беріледі?",options:["Толығына қағазда қолмен қол қоймасымен","1С/Excel-де құрылады, бірақ қол қою үшін басылады","Бөлегі электронды (ЭЦП-мен), бөлегі қағазда — құжат түріне байланысты","Толығына электронды ЭЦП/КЭДО-мен, қағаз тек ерекшеліктер үшін","Электронды автоматты құжат құрау бар, шаблондар орталықтан жаңартылады"],block:0},
+      {section:"HR Әкімшілік & Сәйкестік",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Соңғы жалдалған қызметкерді ойлап төңіңіз. Жұмыс істеу туралы шешімінен оның толық қатынасы бар бірінші жұмыс күніне дейін қанша күн өтті?",options:["2 аптадан жоғары","1–2 апта","3–5 жұмыс күні","1–2 жұмыс күні","Сол күні немесе келесі күні — процесс толығына автоматталған"],block:0},
+      {section:"HR Әкімшілік & Сәйкестік",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Қызметкерлер демалысқа өтініш қалай ұсынады және оның келісімдесінесі қалай жүреді?",options:["Қағаз өтініші → қолмен келісім → қағаз бұйрығы","Email/чат арқылы өтініш → балансты қолмен тексеру → 1С-де құжат","Жүйеде электронды өтініш, бірақ бұйрық басқа жүйеде бөлінеді","Бір жүйе: өтініш → балансты автоматты тексеру → электронды келісім → бұйрық","Self-service саясатты автоматты тексеру, басшыға құлақтандыру және сайлау түзетпесімен"],block:0},
+      {section:"HR Әкімшілік & Сәйкестік",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Кадрлық құжаттардың ӘК еңбек заңдарына сәйкестігін қалай бақылау?",options:["Кадровик тәжірибесіне сенеміз, ерекше назар жоқ","Қолмен тіркелімдер және кезінге-кезек аудиттері (тоқсан/жыл сайын)","Жүйедегі шаблондар, бірақ НПА өзгеруінде жаңартулар қолмен беріледі","Шаблондар нұсқаны басқарумен, аудит ізінде және НПА өзгеруінде автоматты құлақтандырумен","Сәлтеусіз бәндерде шаблондарды орталықтан басқару және олардың қолдану бақылауы"],block:0},
+      {section:"HR Әкімшілік & Сәйкестік",sectionBg:"#fef2f2",sectionColor:"#dc2626",question:"Ақы, салықтар (АПН, СН) және ұсыну (ҰҚЕ, ҚОСМС, СО) қалай есептеледі?",options:["Қолмен Excel-де — формулалар кадровик/бухгалтер құрады","1С ЗУП-та, бірақ әр ай көп қолмен түзетулер болады","Жүйеде автоматты есептеу, бірақ тексеру және түзетулер — қолмен","Толығына автоматты есептеу ең аз қолмен араласуымен","Автоматты есептеу + есептілік автоматты құрау + банкке төлеу интеграциясы"],block:0},
+      {section:"Құралдар мен Сәулет",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Сіздің HR бөлінісі күнделікті қандай негіздік құралдар жиынтығы қолданады?",options:["Тек қағаз, Excel және мессенджерлер","1С ЗУП + Excel + мессенджерлер — бір-біріне байланыспайды","3+ өзге жүйелер (1С, HRM, ырыса, LMS және т.б.) — деректер қолмен ауыстырылады","Бір-бірімен интеграция орнатылған және деректер ағындарын автоматты бірнеше жүйелер","Бір платформа немесе толығына интегралды экожүйе API байланыстарымен"],block:1},
+      {section:"Құралдар мен Сәулет",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Сіздің HR жүйелері мемлекеттік қызметтерге (Enbek, eGov, салық) интеграцияланған ба?",options:["Жоқ — барлығы портальдарда қолмен орындалады","Ішінара — деректер жүйесінен экспорт болады, бірақ портальда қолмен ұсынылады","Экспорттар қажетті форматта автоматталған, портальда ұсыну қолмен","Негіздік мемлекеттік қызметтермен түзу интеграция","Толық интеграция автоматты ұсынумен және мәртебесін бақылаумен"],block:1},
+      {section:"Құралдар мен Сәулет",sectionBg:"#eff6ff",sectionColor:"#1e3a5f",question:"Сіздің HR жүйелеріндегі қызметкерлерінің жеке деректері қалай қорғалған?",options:["Деректер ерік Excel файлдарында / папкада қүсымталарсыз сақталады","Файлдарда/папкаларда құпия сөз бар, бірақ орталықтан қатынасты басқару жоқ","Негіздік жүйеде рөлімен қүсымты, бірақ деректер сақталмайтын файлдарында ","Орталықтан қатынасты басқару, каталогтау, деректер ҚЗ-де сақталады","Толық сәйкестік: шифрлау, аудит ізі, кезінге-кезек аудиттері, жеке деректер туралы ӘК заңына сәйкестік"],block:1},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Қызметкерлердің HR қызметтеріне бір цифрлық арнасы бар ма (портал, қосымша)?",options:["Жоқ — барлық сұрақтар HR бөлінісінде немесе телефон арқылы шешіледі","Ақпарат бөлінген түрде қолжетімді (электрондық пошта, чат, ортақ папкалар)","Корпоративтік портал бар, бірақ HR функциялары шектеулі (тек құбылымдар/құжаттар)","Self-service портал: анықтамалар, демалыстар, ақы туралы деректер","Мобильді қосымша толық self-service-пен, құлақтандырумен және кері байланысымен"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Жаңа қызметкерді басынан өткізу (қатынасы, техника, құжаттар, оқыту) қалай өтеді?",options:["Ретсіз — әрбір рет өзгеше, көп ішінбелі болмайды","Қағазда/Excel-де тіркелім бар, бірақ барлығы қолмен әр түрлі бөлінісінде орындалады","Ішінара автоматталған (мәселен, тек қатынасы немесе тек оқыту), қалғаны қолмен","Автоматты ағын: қатынасы + техника + оқыту жұмыс іс қабылдауының сигналына негіз болып іске қосылады","Толық ағын прогресс бақылаумен, жаңа қызметкердің кері байланысымен және time-to-productivity метрикасымен"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Соңғы қызметкер жұмыстан шығарылуын ойлап төңіңіз. Толық ресімдеу (аяқтау парағы, техника орынға қайту, қатынасы жабу, соңғы төлеу) қанша уақыт алды?",options:["Аптадан жоғары — ретсіз процесс, көбіне ішінбелі болмайды","3–5 жұмыс күні — барлығы қолмен, бірақ тіркелім бар","1–3 күн — процестің бір бөлігі автоматталған","Күні ішінде — қатынасын автоматты жабу және төлеу бар бір ағын","Бірнеше сағатта — толығына автоматталған жұмыстан шығару қатынас ішінара ағымымен"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Персоналды іздестіру процесі (рекрутинг) қалай ұйымдастырылған?",options:["Істеуіндер Excel / мессенджерлер / электрондық поштада — бір жүйе жоқ","Платформалар бар (hh.kz, Enbek), бірақ ұсынушылар қолмен (Excel, чат) ішінде қараланады","Рекрутинг үшін ATS немесе CRM қолданылады, бірақ басқа HR жүйелеріне интеграцияланбайды","ATS HR жүйесіне интеграцияланды: кандидат деректері жұмыс кезінде автоматты ауыстырылады","Толық цикл бір жүйеде: ырысқа өтініштен қызметкерінің шығуына дейін, құпыясы ағынының аналитикасы және time-to-hire-мен"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Қызметкерлердің оқыту және өндіктіктің өндіктігі (L&D) қалай ұйымдастырылған?",options:["Оқыту ішінбелі — сұрауы бойынша ретсіз өтеді","Оқыту жоспары бар, бірақ барлығы (Excel, электрондық пошта, сыртқы ұсынушылар) қолмен ұйымдастырылады","LMS немесе оқыту платформасы қолданылады, бірақ басқа HR процестеріне байланыспайды","LMS HR жүйесіне интеграцияланды: оқыту ұстынымалар, грейдтер және бағалау нәтижелеріне байланысты","AI-ұсынымдарымен жеке дамыту траекториялары, прогресс бақылау және оқыту тиімділігінің болжамды аналитикасы"],block:2},
+      {section:"Talent Experience",sectionBg:"#f0fdf4",sectionColor:"#16a34a",question:"Қызметкерлер HR-жүйесімен әр түрлі тілдерде (қазақ, орыс) өтініш бере ала ма?",options:["Жоқ — барлығы тек бір тілде, таңдау мүмкіндігі жоқ","Өтініш шаблондары 2 тілде бар, бірақ қолмен толтырылады және өңделеді","Жүйе 2 тілде мәлімет енгізуді қолдайды, бірақ интерфейс пен хабарламалар — тек бір тілде","Интерфейс, шаблондар және хабарламалар 2+ тілде қолжетімді, қызметкер тілді таңдайды","Толық көп тілділік: құжаттар, интерфейс, хабарламалар және аналитика қызметкер таңдаған тілде автоматты құрылады"],block:2},
+      {section:"Аналитика мен Деректер",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Басшылықтан HR есепке соңғы сұрау (ағыны, headcount, ФОТ) ойлап төңіңіз. Оны қанша уақытта дайындадыңыз?",options:["Бірнеше күн — әр түрлі көздерден қолмен жиналды","1–2 күн — Excel-де шаблондар бар, бірақ деректер қолмен жаңартылады","Бірнеше сағатта — жүйесінен экспорт + қолмен түзетімі","Минут ішінде — актуальды деректері бар сәулет, тек сүзгілеу қажет","Есеп қажет емес — басшылық деңгейсізді өзі сәулетте көреді"],block:3},
+      {section:"Аналитика мен Деректер",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Сіздің компанияда қызметкер деректері туралы «шындықтың бір көзі» бар ма?",options:["Жоқ — деректер әр түрлі жерде (1С, Excel, қағаз), көбіне өзгеше","Ресми түрде 1С, бірақ деректердің актуальдығы кепілденбеген","Негіздік жүйе бар, бірақ толық суретке 1–2 төлі қарау қажет","Бір жүйе — барлық деректер актуальды және рөлімен қүсымталы","Толық интеграция автоматты синхронизациямен әрбір көзінен және деректер сапасының бақылаумен"],block:3},
+      {section:"Аналитика мен Деректер",sectionBg:"#fffbeb",sectionColor:"#d97706",question:"Басшылықтың стратегиялық шешім түсетуінде HR деректері қолданылады ма?",options:["Жоқ — HR деректерді тек сұрау бойынша және кешіктіргеннен ұсынады","Кезде-кезек — тоқсандық есептер PowerPoint/Excel-де басшылықта","Тұрақты түрде — HR метрикасы басқарушылық есептілігіне кіргінген","Жүйелі түрде — HR сәулеті басшылықта қолжетімді, метрикалар басқарушылық істелінде талқыланады","Бастапқы түрде — HR деректерге негіз болып ұсыныстарын ұсынады, басшылық HR аналитиканы жоспарланғанда қолданады"],block:3}
+    ],
+    leadQuestion: {
+      question: "HR автоматтандыруды қашан енгізуді жоспарлайсыз?",
+      options: [
+        "Иә, белсенді түрде шешім таңдаймыз",
+        "Иә, жоспарлаймыз, бірақ әлі өзін есептігінде",
+        "Мүмкін, тиісті шешім табсақ",
+        "Жоқ, ағымдағы жүйелер ұнайды",
+        "Нақтылай билмеймін"
+      ]
+    },
+    progressText: "Сұрақ {current} / {total}",
+    questionPart: "Сұрақ",
+    from: "/",
+    lastQuestionLabel: "Соңғы сұрақ",
+    recs: "Келесі деңгейге ауысуға ұсыныстар"
+  }
+};
+
+let currentLang = 'ru';
+let currentQuestion = 0;
+let answers = new Array(18).fill(null);
+let leadAnswer = null;
+let showingLeadQ = false;
+let resultData = null;
+
+const SIZE_SMALL = 0;
+const SIZE_MEDIUM = 1;
+const SIZE_LARGE = 2;
+
+const blockWeights = [0.30, 0.25, 0.25, 0.20];
+const blockColors = ["#dc2626", "#1e3a5f", "#16a34a", "#d97706"];
+
+const GOOGLE_SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyVlAKhU0o398M-Pi0q82Zfnf9x-19FLufgLou1e0zdefi-6yZjQ3KJG4_fgXWdRrynyw/exec';
+
+/* ===== LANGUAGE SWITCHER ===== */
+function switchLang(lang) {
+  if (lang === currentLang) return;
+  currentLang = lang;
+
+  // Update nav buttons
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + lang + "'")) {
+      btn.classList.add('active');
+    }
+  });
+
+  updateAllText();
+  updateIndustries();
+  updateRoles();
+
+  if (currentQuestion > 0 || showingLeadQ) {
+    renderQuestion();
+  }
+}
+
+function updateAllText() {
+  const L = LANG[currentLang];
+  document.getElementById('navResearch').textContent = L.navResearch;
+  document.getElementById('heroBadge').textContent = L.heroBadge;
+  document.querySelector('.hero h1').innerHTML = `<em>${L.heroH1_1}</em> ${L.heroH1_2}`;
+  document.getElementById('heroSubtitle').textContent = L.heroSubtitle;
+  document.getElementById('heroCTA').textContent = L.heroCTA;
+  document.getElementById('partner1').textContent = L.partner1;
+  document.getElementById('partner2').textContent = L.partner2;
+  document.getElementById('stat1').textContent = L.stat1;
+  document.getElementById('stat2').textContent = L.stat2;
+  document.getElementById('stat3').textContent = L.stat3;
+  document.getElementById('stat4').textContent = L.stat4;
+  document.getElementById('levelsH2').textContent = L.levelsH2;
+  document.getElementById('levelsSubtitle').textContent = L.levelsSubtitle;
+
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById(`level${i}Title`).textContent = L[`level${i}`].title;
+    document.getElementById(`level${i}Desc`).textContent = L[`level${i}`].desc;
+  }
+
+  document.getElementById('profileH2').textContent = L.profileH2;
+  document.getElementById('profileSubtitle').textContent = L.profileSubtitle;
+  document.getElementById('industryLabel').innerHTML = L.industryLabel + ' <span class="required">*</span>';
+  document.getElementById('companySizeLabel').innerHTML = L.companySizeLabel + ' <span class="required">*</span>';
+  document.getElementById('roleLabel').innerHTML = L.roleLabel + ' <span class="required">*</span>';
+  document.getElementById('docLangLabel').innerHTML = L.docLangLabel + ' <span class="required">*</span>';
+  document.getElementById('docLangError').textContent = L.docLangError;
+  /* Update docLang dropdown options */
+  const docLangSel = document.getElementById('docLang');
+  const currentDocLang = docLangSel.value;
+  docLangSel.innerHTML = '<option value="">-- ' + (currentLang === 'ru' ? 'выберите' : 'таңдаңыз') + ' --</option>';
+  L.docLangOptions.forEach(opt => { const o = document.createElement('option'); o.textContent = opt; o.value = opt; docLangSel.appendChild(o); });
+  if (currentDocLang) docLangSel.value = currentDocLang;
+  document.getElementById('emailLabel').innerHTML = L.emailLabel + ' <span class="required">*</span>';
+  document.getElementById('recaptchaLabel').textContent = L.recaptchaLabel;
+  document.getElementById('recaptchaError').textContent = L.recaptchaError;
+  document.getElementById('startQuizBtn').textContent = L.startQuizBtn;
+  document.getElementById('downloadPDFBtn').textContent = L.downloadPDFBtn;
+  document.getElementById('ctaH2').textContent = L.ctaH2;
+  document.getElementById('ctaP').textContent = L.ctaP;
+  document.getElementById('ctaBtn').textContent = L.ctaBtn;
+  document.getElementById('footerText').textContent = L.footerText;
+}
+
+function updateIndustries() {
+  const select = document.getElementById('industry');
+  const currentVal = select.value;
+  select.innerHTML = '<option value="">-- выберите --</option>';
+  LANG[currentLang].industries.forEach(ind => {
+    const opt = document.createElement('option');
+    opt.value = ind;
+    opt.textContent = ind;
+    select.appendChild(opt);
+  });
+  select.value = currentVal;
+}
+
+function updateRoles() {
+  const select = document.getElementById('role');
+  const currentVal = select.value;
+  select.innerHTML = '<option value="">-- выберите --</option>';
+  LANG[currentLang].roles.forEach(r => {
+    const opt = document.createElement('option');
+    opt.value = r;
+    opt.textContent = r;
+    select.appendChild(opt);
+  });
+  select.value = currentVal;
+}
+
+/* ===== TOAST ===== */
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + (type || '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+/* ===== HELPERS ===== */
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+function show(id) { document.getElementById(id).classList.add('active'); }
+function unshow(id) { document.getElementById(id).classList.remove('active'); }
+
+function getCompanySizeTier() {
+  const size = document.getElementById('companySize').value;
+  if (size === 'До 200') return SIZE_SMALL;
+  if (size === '200–500' || size === '500–1 000') return SIZE_MEDIUM;
+  return SIZE_LARGE;
+}
+
+/* ===== PROFILE VALIDATION ===== */
+function validateProfile() {
+  let valid = true;
+  const fields = [
+    { id: 'industry', errorId: 'industryError' },
+    { id: 'companySize', errorId: 'companySizeError' },
+    { id: 'role', errorId: 'roleError' },
+    { id: 'docLang', errorId: 'docLangError' }
+  ];
+  fields.forEach(f => {
+    const el = document.getElementById(f.id);
+    const err = document.getElementById(f.errorId);
+    if (!el.value) {
+      el.classList.add('field-error');
+      err.style.display = 'block';
+      valid = false;
+    } else {
+      el.classList.remove('field-error');
+      err.style.display = 'none';
+    }
+  });
+
+  const email = document.getElementById('userEmail');
+  const emailErr = document.getElementById('emailError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email.value || !emailRegex.test(email.value)) {
+    email.classList.add('field-error');
+    emailErr.style.display = 'block';
+    valid = false;
+  } else {
+    email.classList.remove('field-error');
+    emailErr.style.display = 'none';
+  }
+
+  /* CAPTCHA temporarily disabled for testing
+  const recaptchaResp = grecaptcha.getResponse();
+  const recaptchaErr = document.getElementById('recaptchaError');
+  if (!recaptchaResp) {
+    recaptchaErr.style.display = 'block';
+    valid = false;
+  } else {
+    recaptchaErr.style.display = 'none';
+  }
+  */
+
+  return valid;
+}
+
+/* ===== NAVIGATION ===== */
+function startQuiz() {
+  hide('navBar');
+  hide('heroSection');
+  hide('statsBar');
+  hide('levelsSection');
+  hide('footer');
+  show('profileStep');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startQuestions() {
+  if (!validateProfile()) return;
+  hide('navBar');
+  unshow('profileStep');
+  show('quizContainer');
+  currentQuestion = 0;
+  showingLeadQ = false;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderQuestion() {
+  if (showingLeadQ) {
+    renderLeadQuestion();
+    return;
+  }
+
+  const L = LANG[currentLang];
+  const questions = L.questions;
+  const q = questions[currentQuestion];
+  const total = questions.length + 1;
+  const progress = ((currentQuestion + 1) / total * 100).toFixed(0);
+
+  document.getElementById('progressBar').style.width = progress + '%';
+  const progressLabel = L.progressText.replace('{current}', currentQuestion + 1).replace('{total}', total);
+  document.getElementById('progressText').textContent = progressLabel;
+
+  let html = `<div class="quiz-section-label" style="background:${q.sectionBg};color:${q.sectionColor}">${q.section}</div>`;
+  html += `<div class="quiz-question">${q.question}</div><div class="quiz-options">`;
+  q.options.forEach((opt, i) => {
+    const sel = answers[currentQuestion] === i ? 'selected' : '';
+    html += `<div class="quiz-option ${sel}" onclick="selectAnswer(${i})">${opt}</div>`;
+  });
+  html += '</div>';
+  document.getElementById('questionArea').innerHTML = html;
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+  document.getElementById('prevBtn').textContent = L.prevBtn;
+  document.getElementById('nextBtn').textContent = L.nextBtn;
+  document.getElementById('nextBtn').disabled = answers[currentQuestion] === null;
+}
+
+function renderLeadQuestion() {
+  const L = LANG[currentLang];
+  const questions = L.questions;
+  const leadQuestion = L.leadQuestion;
+  const total = questions.length + 1;
+
+  document.getElementById('progressBar').style.width = '100%';
+  const progressLabel = L.progressText.replace('{current}', total).replace('{total}', total);
+  document.getElementById('progressText').textContent = progressLabel;
+
+  let html = `<div class="quiz-section-label" style="background:#f3f4f6;color:#4b5563">${L.lastQuestionLabel}</div>`;
+  html += `<div class="quiz-question">${leadQuestion.question}</div><div class="quiz-options">`;
+  leadQuestion.options.forEach((opt, i) => {
+    const sel = leadAnswer === i ? 'selected' : '';
+    html += `<div class="quiz-option ${sel}" onclick="selectLeadAnswer(${i})">${opt}</div>`;
+  });
+  html += '</div>';
+  document.getElementById('questionArea').innerHTML = html;
+  document.getElementById('prevBtn').disabled = false;
+  document.getElementById('prevBtn').textContent = L.prevBtn;
+  document.getElementById('nextBtn').textContent = L.nextBtnFinal;
+  document.getElementById('nextBtn').disabled = leadAnswer === null;
+}
+
+function selectAnswer(idx) {
+  answers[currentQuestion] = idx;
+  renderQuestion();
+}
+
+function selectLeadAnswer(idx) {
+  leadAnswer = idx;
+  renderLeadQuestion();
+}
+
+function nextQuestion() {
+  if (showingLeadQ) {
+    if (leadAnswer === null) return;
+    showResults();
+    return;
+  }
+  if (answers[currentQuestion] === null) return;
+  const L = LANG[currentLang];
+  if (currentQuestion < L.questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else {
+    showingLeadQ = true;
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function prevQuestion() {
+  const L = LANG[currentLang];
+  if (showingLeadQ) {
+    showingLeadQ = false;
+    currentQuestion = L.questions.length - 1;
+    renderQuestion();
+    return;
+  }
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+/* ===== RESULTS ===== */
+function showResults() {
+  unshow('quizContainer');
+  show('resultsContainer');
+  document.getElementById('navBar').style.display = '';
+  document.getElementById('footer').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const L = LANG[currentLang];
+  const questions = L.questions;
+  const blockNames = L.blockNames;
+  const blockScores = [0, 0, 0, 0];
+  const blockCounts = [0, 0, 0, 0];
+
+  questions.forEach((q, i) => {
+    const s = answers[i] || 0;
+    blockScores[q.block] += s;
+    blockCounts[q.block]++;
+  });
+
+  const blockAvgs = blockScores.map((s, i) => s / blockCounts[i]);
+  const totalIndex = blockAvgs.reduce((sum, avg, i) => sum + avg * blockWeights[i], 0);
+  const totalPct = Math.round((totalIndex / 4) * 100);
+
+  let level, levelName, levelColor, levelDesc;
+  if (totalPct <= 20) {
+    level = 1;
+    levelName = L.level1.title;
+    levelColor = '#ef4444';
+    levelDesc = currentLang === 'ru' ? 'Ваши HR-процессы в основном ведутся на бумаге. Автоматизация отсутствует или минимальна.' : 'Сіздің HR процестері негіздік қағазда өтеді. Автоматтандыру жоқ немесе минимальды.';
+  } else if (totalPct <= 40) {
+    level = 2;
+    levelName = L.level2.title;
+    levelColor = '#f97316';
+    levelDesc = currentLang === 'ru' ? 'У вас есть базовые инструменты (1С, Excel), но процессы не связаны между собой. Много ручной работы.' : 'Сіздің негіздік құралдарыңыз (1С, Excel) бар, бірақ процестер байланыспайды. Көп қолмен жұмыс.';
+  } else if (totalPct <= 60) {
+    level = 3;
+    levelName = L.level3.title;
+    levelColor = '#d97706';
+    levelDesc = currentLang === 'ru' ? 'Отдельные HR-системы работают, но нет интеграций. Данные дублируются и переносятся вручную.' : 'Өзге HR жүйелері істейді, бірақ интеграция жоқ. Деректер қосталып, қолмен ауыстырылады.';
+  } else if (totalPct <= 80) {
+    level = 4;
+    levelName = L.level4.title;
+    levelColor = '#16a34a';
+    levelDesc = currentLang === 'ru' ? 'Сквозная автоматизация процессов с интеграциями. Электронные подписи, единый поток данных.' : 'Процестің сызбалық автоматтандыруы интеграциялармен. Электронды қол қойма, деректердің бір ағыны.';
+  } else {
+    level = 5;
+    levelName = L.level5.title;
+    levelColor = '#1e3a5f';
+    levelDesc = currentLang === 'ru' ? 'Полная автоматизация с real-time аналитикой и проактивным HR. Вы в авангарде рынка Казахстана.' : 'Real-time аналитикамен толық автоматтандыру және белсенді HR. Сіз Қазақстан нарығының өндібіндесіз.';
+  }
+
+  const sizeTier = getCompanySizeTier();
+
+  resultData = {
+    totalPct, level, levelName, levelColor, levelDesc, blockAvgs, sizeTier,
+    industry: document.getElementById('industry').value,
+    companySize: document.getElementById('companySize').value,
+    role: document.getElementById('role').value,
+    docLang: document.getElementById('docLang').value,
+    email: document.getElementById('userEmail').value
+  };
+
+  const circ = 2 * Math.PI * 78;
+  const off = circ - (totalPct / 100) * circ;
+  document.getElementById('resultHero').innerHTML = `
+    <div class="result-score-ring">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="78" fill="none" stroke="#e5e7eb" stroke-width="10"/>
+        <circle cx="90" cy="90" r="78" fill="none" stroke="${levelColor}" stroke-width="10" stroke-dasharray="${circ}" stroke-dashoffset="${off}" stroke-linecap="round"/>
+      </svg>
+      <span class="score-text">${totalPct}<span class="score-pct">%</span></span>
+    </div>
+    <div class="result-level-badge" style="background:${levelColor}15;color:${levelColor}">Уровень ${level}: ${levelName}</div>
+    <p>${levelDesc}</p>`;
+
+  let vh = '';
+  blockNames.forEach((name, i) => {
+    const pct = Math.round((blockAvgs[i] / 4) * 100);
+    vh += `<div class="vector-card"><h3>${name} (${Math.round(blockWeights[i] * 100)}%)</h3><div class="vector-score" style="color:${blockColors[i]}">${pct}%</div><div class="vector-bar"><div class="vector-bar-fill" style="width:${pct}%;background:${blockColors[i]}"></div></div></div>`;
+  });
+  document.getElementById('vectorsGrid').innerHTML = vh;
+
+  const recs = getRecs(blockAvgs, level, sizeTier);
+  let rh = `<h2>${L.recs}</h2>`;
+  recs.forEach(r => {
+    rh += `<div class="rec-item"><div class="rec-icon" style="background:${r.color}15;color:${r.color}">${r.icon}</div><div><h4>${r.title}</h4><p>${r.text}</p></div></div>`;
+  });
+  document.getElementById('recommendations').innerHTML = rh;
+
+  sendToGoogleSheets();
+}
+
+/* ===== RECOMMENDATIONS ===== */
+function getRecs(ba, level, sizeTier) {
+  const r = [];
+  const isSmall = sizeTier === SIZE_SMALL;
+  const isLarge = sizeTier === SIZE_LARGE;
+  const recsByLang = {
+    ru: {
+      rec1_small: { icon: '📄', title: 'Начните с электронных подписей для ключевых документов', text: 'Для компании вашего размера оптимально начать с ЭЦП для трудовых договоров и приказов. Это даст быстрый эффект без крупных инвестиций — сократит оформление с дней до часов.', color: '#dc2626' },
+      rec1_large: { icon: '📄', title: 'Внедрите электронный кадровый документооборот (КЭДО)', text: 'При вашем масштабе бумажный КДП — это тысячи документов в месяц. Переход на КЭДО с ЭЦП сократит время оформления в 5–10 раз и устранит юридические риски.', color: '#dc2626' },
+      rec2: { icon: '✅', title: 'Автоматизируйте payroll и compliance-контроль', text: 'Настройте автоматический расчёт ЗП, налогов и отчислений. Внедрите контроль версий шаблонов и audit trail для всех кадровых операций.', color: '#dc2626' },
+      rec3_small: { icon: '🔗', title: 'Выберите единую HR-платформу вместо «зоопарка»', text: 'При числе сотрудников до 200 нет смысла в нескольких системах. Одна облачная платформа (HRM + КДП) закроет 80% потребностей и будет стоить дешевле, чем поддержка разрозненных решений.', color: '#1e3a5f' },
+      rec3_large: { icon: '🔗', title: 'Свяжите HR-системы интеграциями', text: 'Разрозненные системы — главный источник ошибок и потери времени. Начните с интеграции учётной системы (1С) с HR-платформой через API.', color: '#1e3a5f' },
+      rec4: { icon: '🔒', title: 'Защитите данные и подключите госсервисы', text: 'Настройте ролевой доступ, логирование и интеграцию с Enbek/eGov. Это сократит время на отчётность и снизит риск штрафов.', color: '#1e3a5f' },
+      rec5_small: { icon: '📱', title: 'Создайте базовый HR self-service', text: 'Даже для небольшой компании self-service (заявки на отпуск, справки, расчётные листки) снимет 50–70% рутинных вопросов к HR. Начните с простого портала или бота в мессенджере.', color: '#16a34a' },
+      rec5_large: { icon: '📱', title: 'Создайте единый портал для сотрудников с мобильным доступом', text: 'При {size} сотрудников self-service портал — необходимость. Он снимает до 70% нагрузки с HR-отдела и даёт сотрудникам прозрачность по всем HR-процессам.', color: '#16a34a' },
+      rec6: { icon: '🚀', title: 'Автоматизируйте полный lifecycle сотрудника', text: 'Для компании с {size} сотрудников критически важен единый workflow от найма до увольнения. Особое внимание — offboarding с моментальным отзывом доступов (вопрос безопасности) и рекрутинг с ATS.', color: '#16a34a' },
+      rec7: { icon: '🚀', title: 'Автоматизируйте онбординг, рекрутинг и offboarding', text: 'Единый workflow: рекрутинг (ATS) → оформление → доступы → обучение → развитие → offboarding. Начните с ATS-интеграции и автоматизации онбординга.', color: '#16a34a' },
+      rec8_small: { icon: '📊', title: 'Настройте базовые HR-метрики', text: 'Для компании вашего размера достаточно 5–7 ключевых метрик (текучесть, время найма, ФОТ к выручке). Начните с простого дашборда в Excel/Google Sheets с автообновлением из HR-системы.', color: '#d97706' },
+      rec8_large: { icon: '📊', title: 'Внедрите HR-дашборд реального времени', text: 'Если подготовка отчёта занимает дни — вы принимаете решения на устаревших данных. При {size} сотрудников дашборд с актуальными метриками — не роскошь, а необходимость.', color: '#d97706' },
+      rec9: { icon: '🧠', title: 'Создайте единый источник правды', text: 'Объедините данные из всех систем в единое хранилище с автоматической синхронизацией. Это фундамент для аналитики и data-driven решений.', color: '#d97706' },
+      rec10: { icon: '⭐', title: 'Вы в числе лидеров рынка!', text: 'Ваш уровень цифровизации HR выше большинства компаний Казахстана. Рассмотрите внедрение предиктивной аналитики и AI-инструментов для управления талантами.', color: '#16a34a' }
+    },
+    kz: {
+      rec1_small: { icon: '📄', title: 'Негіздік құжаттар үшін электронды қол қоймадан бастаңыз', text: 'Сіздің өлшеміңіздегі компания үшін еңбек шарттары мен бұйрықтарына ЭЦП-мен бастау оптималды. Бұл инвестициясыз жылдам әсер береді — ресімдеуді күндерден сағаттарға қысқартады.', color: '#dc2626' },
+      rec1_large: { icon: '📄', title: 'Электронды кадрлық құжат айналымын (КЭДО) енгізіңіз', text: 'Сіздің масштабыңызда қағаз КДП айына мың құжат. КЭДО-ға ЭЦП-мен ауысу ресімдеу уақытын 5–10 есеге қысқартады және құқық тәуекелін жойды.', color: '#dc2626' },
+      rec2: { icon: '✅', title: 'Өтөндік және сәйкестік-бақылауды автоматтаңыз', text: 'ЗП, салық және ұсынуларын автоматты есептеуді орнатыңыз. Шаблон нұсқасын және барлық кадрлық операциялар үшін аудит ізін бақылауды енгізіңіз.', color: '#dc2626' },
+      rec3_small: { icon: '🔗', title: '«Зоопаркты» ғана емес, бір HR-платформасын таңдаңыз', text: 'Қызметкерлер саны 200-ге дейін болса, бірнеше жүйеге мағынасы жоқ. Бір облық платформа (HRM + КДП) 80% қажеттіліктерін өтінді және өзге шешімдерді ұстарған қаржысынан арзан болады.', color: '#1e3a5f' },
+      rec3_large: { icon: '🔗', title: 'HR жүйелерін интеграциялармен байланыстырыңыз', text: 'Өзге жүйелер — қателіктер мен уақыт ысырапының негіздік көзі. Есепке жүйесінің (1С) HR-платформасымен API арқылы интеграциясынан бастаңыз.', color: '#1e3a5f' },
+      rec4: { icon: '🔒', title: 'Деректерді қорғаңыз және мемлекеттік қызметтерді байланыстырыңыз', text: 'Рөлімің қатынасын, каталогтауды және Enbek/eGov интеграциясын орнатыңыз. Бұл есептілік уақытын қысқартады және айып төлеу тәуекелін төмендетеді.', color: '#1e3a5f' },
+      rec5_small: { icon: '📱', title: 'Негіздік HR self-service құрыңыз', text: 'Өте кіші компания үшін де self-service (демалыс сұраулары, анықтамалар, есептілік парақтары) HR-қа 50–70% сұрақтарын аласыз. Портал немесе мессенджер ботынан бастаңыз.', color: '#16a34a' },
+      rec5_large: { icon: '📱', title: 'Мобильді қатынасымен қызметкерлік портал құрыңыз', text: '{size} қызметкерімен self-service портал ағымды қажеттіліксі. Ол HR бөлінісінде 70% жүктемені төмендетеді және барлық HR процестерінде айықты береді.', color: '#16a34a' },
+      rec6: { icon: '🚀', title: 'Қызметкердің толық ағын жиынтығын автоматтаңыз', text: '{size} қызметкерімен түйінді жиынтақ өтінеді. Балл өтіндігінен шығарылуға дейін ағын дәл болуы қажет, ерекше offboarding және ATS рекрутинг.', color: '#16a34a' },
+      rec7: { icon: '🚀', title: 'Онбординг, рекрутинг және offboarding автоматтаңыз', text: 'Бір ағын: рекрутинг (ATS) → ресімдеу → қатынас → оқыту → өндік → offboarding. ATS интеграциясынан және онбординг автоматтауынан бастаңыз.', color: '#16a34a' },
+      rec8_small: { icon: '📊', title: 'Негіздік HR метрикасын орнатыңыз', text: 'Сіздің өлшеміңіз үшін 5–7 негіздік метрика (айралу, өндіу уақыты, ФОТ кірісі). Excel/Google Sheets-те қарапайым сақ құрымдан және HR жүйесінің автоқажыту енгізіңіз.', color: '#d97706' },
+      rec8_large: { icon: '📊', title: 'Real-time HR сақ енгізіңіз', text: 'Есеп дайындау күндер алса — ескі деректеге шешім қабылдайсыз. {size} қызметкерімен өткі метрикасы сақ — төмсіндіс емес, ағымды қажеттіліксі.', color: '#d97706' },
+      rec9: { icon: '🧠', title: 'Деректердің бір көзін құрыңыз', text: 'Барлық жүйелердегі деректерді бір деңгейге автоматты синхронизациялаумен біріктіріңіз. Бұл аналитика мен деректе-қосу шешімінің негіздігі.', color: '#d97706' },
+      rec10: { icon: '⭐', title: 'Сіз нарықтың лидерлерінің қатарында!', text: 'Сіздің HR цифрландыру деңгейі Қазақстан компаниялар көбінесінен жоғары. Болжамды аналитика және AI құралдарын таланты басқарумен енгізуді қарастырыңыз.', color: '#16a34a' }
+    }
+  };
+
+  const recLang = recsByLang[currentLang];
+
+  if (ba[0] < 2.5) {
+    r.push(isSmall ? recLang.rec1_small : recLang.rec1_large);
+  }
+  if (ba[0] >= 2.5 && ba[0] < 3.5) {
+    r.push(recLang.rec2);
+  }
+
+  if (ba[1] < 2) {
+    r.push(isSmall ? recLang.rec3_small : recLang.rec3_large);
+  }
+  if (ba[1] >= 2 && ba[1] < 3.5) {
+    r.push(recLang.rec4);
+  }
+
+  if (ba[2] < 2) {
+    r.push(isSmall ? recLang.rec5_small : recLang.rec5_large);
+  }
+  if (ba[2] >= 2 && ba[2] < 3.5) {
+    r.push(isLarge ? recLang.rec6 : recLang.rec7);
+  }
+
+  if (ba[3] < 2) {
+    r.push(isSmall ? recLang.rec8_small : recLang.rec8_large);
+  }
+  if (ba[3] >= 2 && ba[3] < 3.5) {
+    r.push(recLang.rec9);
+  }
+
+  if (r.length === 0) {
+    r.push(recLang.rec10);
+  }
+
+  /* Replace {size} placeholder with actual company size */
+  const sizeVal = document.getElementById('companySize').value || '';
+  return r.map(rec => ({
+    ...rec,
+    text: rec.text.replace(/\{size\}/g, sizeVal)
+  }));
+}
+
+/* ===== GOOGLE SHEETS API ===== */
+async function sendToGoogleSheets() {
+  if (!GOOGLE_SHEETS_WEBHOOK_URL) {
+    console.log('[HR Index] Google Sheets webhook not configured');
+    return;
+  }
+
+  const L = LANG[currentLang];
+  const questions = L.questions;
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    language: currentLang,
+    email: resultData.email,
+    industry: resultData.industry,
+    companySize: resultData.companySize,
+    role: resultData.role,
+    docLang: resultData.docLang,
+    totalScore: resultData.totalPct,
+    level: resultData.level,
+    levelName: resultData.levelName,
+    blockScores: {
+      hrAdmin: Math.round((resultData.blockAvgs[0] / 4) * 100),
+      tools: Math.round((resultData.blockAvgs[1] / 4) * 100),
+      talent: Math.round((resultData.blockAvgs[2] / 4) * 100),
+      analytics: Math.round((resultData.blockAvgs[3] / 4) * 100)
+    },
+    answers: answers.map((a, i) => ({
+      question: questions[i] ? questions[i].question : ('Q' + (i+1)),
+      answer: a,
+      answerText: questions[i] ? questions[i].options[a || 0] : ''
+    })),
+    leadAnswer: L.leadQuestion && L.leadQuestion.options ? L.leadQuestion.options[leadAnswer] : '',
+    leadScore: leadAnswer <= 2 ? 'hot' : 'cold'
+  };
+
+  try {
+    const resp = await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    if (resp.ok) {
+      console.log('[HR Index] Data sent to Google Sheets');
+    } else {
+      console.warn('[HR Index] Google Sheets responded with:', resp.status);
+    }
+  } catch (e) {
+    console.warn('[HR Index] Could not send data:', e.message);
+  }
+}
+
+/* ===== PDF GENERATION ===== */
+async function downloadPDF() {
+  const L = LANG[currentLang];
+  showToast(currentLang === 'ru' ? 'Генерируем PDF-отчёт...' : 'PDF есепті құрып жатырмыз...');
+
+  try {
+    const { jsPDF } = window.jspdf;
+    const pdfDiv = document.createElement('div');
+    pdfDiv.id = '_pdfRender';
+    pdfDiv.style.cssText = 'position:fixed;left:-9999px;top:0;width:800px;background:#fff;font-family:Inter,Arial,sans-serif;color:#1a1a2e;padding:0;';
+
+    const d = resultData;
+    const bPcts = d.blockAvgs.map(a => Math.round((a / 4) * 100));
+    const recs = getRecs(d.blockAvgs, d.level, d.sizeTier);
+    const dateStr = new Date().toLocaleDateString(currentLang === 'ru' ? 'ru-RU' : 'kk-KZ');
+
+    pdfDiv.innerHTML = `
+      <div style="background:#0f2b46;padding:28px 40px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="color:#fff;font-size:20px;font-weight:800;letter-spacing:-0.5px">HR Digital Maturity Index</div>
+          <div style="color:rgba(255,255,255,0.6);font-size:12px;margin-top:4px">People Consulting × Doodocs | Kazakhstan 2026</div>
+        </div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px">${dateStr}</div>
+      </div>
+      <div style="padding:32px 40px">
+        <div style="display:flex;gap:24px;margin-bottom:24px;font-size:13px;color:#4b5563">
+          <span><b>${currentLang === 'ru' ? 'Отрасль' : 'Сала'}:</b> ${d.industry}</span>
+          <span><b>${currentLang === 'ru' ? 'Размер' : 'Өлшемі'}:</b> ${d.companySize}</span>
+          <span><b>${currentLang === 'ru' ? 'Роль' : 'Рөлі'}:</b> ${d.role}</span>
+        </div>
+        <div style="background:#f7f8fa;border-radius:12px;padding:28px 32px;margin-bottom:24px;display:flex;align-items:center;gap:32px">
+          <div style="text-align:center;min-width:100px">
+            <div style="font-size:52px;font-weight:900;letter-spacing:-2px;color:#1a1a2e">${d.totalPct}<span style="font-size:22px;color:#6b7280">%</span></div>
+          </div>
+          <div>
+            <div style="display:inline-block;padding:5px 14px;border-radius:6px;font-weight:700;font-size:13px;background:${d.levelColor}18;color:${d.levelColor}">Уровень ${d.level}: ${d.levelName}</div>
+            <p style="color:#4b5563;font-size:13px;margin-top:8px;line-height:1.5">${d.levelDesc}</p>
+          </div>
+        </div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:16px">${currentLang === 'ru' ? 'Оценка по векторам' : 'Векторлар бойынша бағалау'}</div>
+        ${L.blockNames.map((name, i) => `
+          <div style="margin-bottom:14px">
+            <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+              <span style="color:#4b5563">${name} (${Math.round(blockWeights[i] * 100)}%)</span>
+              <span style="font-weight:700;color:${blockColors[i]}">${bPcts[i]}%</span>
+            </div>
+            <div style="background:#e5e7eb;border-radius:4px;height:8px;overflow:hidden">
+              <div style="background:${blockColors[i]};height:100%;width:${bPcts[i]}%;border-radius:4px"></div>
+            </div>
+          </div>
+        `).join('')}
+        <div style="font-size:14px;font-weight:700;margin-top:28px;margin-bottom:14px">${currentLang === 'ru' ? 'Рекомендации' : 'Ұсыныстар'}</div>
+        ${recs.map((r, idx) => `
+          <div style="margin-bottom:14px;padding:12px 16px;background:#f9fafb;border-radius:8px;border-left:3px solid ${r.color}">
+            <div style="font-size:13px;font-weight:700;color:#1a1a2e;margin-bottom:4px">${idx + 1}. ${r.title}</div>
+            <div style="font-size:12px;color:#4b5563;line-height:1.5">${r.text}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="border-top:1px solid #e5e7eb;padding:16px 40px;text-align:center;font-size:10px;color:#9ca3af">
+        People Consulting × Doodocs HR | hr-maturity.kz | Kazakhstan 2026
+      </div>
+    `;
+
+    document.body.appendChild(pdfDiv);
+
+    const canvas = await html2canvas(pdfDiv, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+
+    document.body.removeChild(pdfDiv);
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const imgW = canvas.width, imgH = canvas.height;
+    const pdfW = 210, pdfH = 297;
+    const margin = 10;
+    const contentW = pdfW - 2 * margin;
+    const contentH = (imgH / imgW) * contentW;
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageContentH = pdfH - 2 * margin;
+
+    if (contentH <= pageContentH) {
+      pdf.addImage(imgData, 'JPEG', margin, margin, contentW, contentH);
+    } else {
+      const pageCanvasH = Math.floor(imgW * (pageContentH / contentW));
+      let srcY = 0;
+      let page = 0;
+      while (srcY < imgH) {
+        if (page > 0) pdf.addPage();
+        const sliceH = Math.min(pageCanvasH, imgH - srcY);
+        const sliceCanvas = document.createElement('canvas');
+        sliceCanvas.width = imgW;
+        sliceCanvas.height = sliceH;
+        const ctx = sliceCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, srcY, imgW, sliceH, 0, 0, imgW, sliceH);
+        const sliceImg = sliceCanvas.toDataURL('image/jpeg', 0.95);
+        const sliceDisplayH = (sliceH / imgW) * contentW;
+        pdf.addImage(sliceImg, 'JPEG', margin, margin, contentW, sliceDisplayH);
+        srcY += sliceH;
+        page++;
+      }
+    }
+
+    pdf.save(`HR-Maturity-Index-${d.totalPct}pct.pdf`);
+    showToast(currentLang === 'ru' ? 'PDF-отчёт скачан!' : 'PDF есеп түсірілді!', 'success');
+  } catch (e) {
+    console.error('PDF generation failed:', e);
+    showToast(currentLang === 'ru' ? 'Ошибка при генерации PDF' : 'PDF құрубасында қатесі', 'error');
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+  updateAllText();
+  updateIndustries();
+  updateRoles();
+});
+</script>
+</body>
+</html>
